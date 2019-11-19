@@ -1,0 +1,6 @@
+.idea
+cmake-build-debug
+CMakeLists.txt
+.get_next_line.c.swo
+.vscode
+a.out.dSYM
