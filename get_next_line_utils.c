@@ -52,7 +52,6 @@ char	*ft_strdup(const char *s1)
 	i = 0;
 	len = ft_strlen(s1);
 	str = malloc(len + 1);
-	bzero(str, len);
 	if (str)
 	{
 		while (i < len)

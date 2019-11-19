@@ -53,7 +53,6 @@
 //    i = 0;
 //    len = ft_strlen(s1);
 //    str = malloc(len + 1);
-//    bzero(str, len);
 //    if (str)
 //    {
 //        while (i < len)
@@ -118,29 +117,6 @@
 //}
 //
 
-
-char *get_new_line(char *str)
-{
-	int i;
-	int len;
-	char *res;
-	char *tmp;
-
-	i = 0;
-	len = ft_strlen(str);
-	while (i < len)
-	{
-		if (str[i] == '\n')
-		{
-			tmp = str;
-			res = ft_substr(str, 0, i);
-			return (res);
-		}
-		i++;
-	}
-	return (NULL); //should be NULL
-}
-
 int get_char_index(char *str, char c)
 {
 	int i;
@@ -156,55 +132,34 @@ int get_char_index(char *str, char c)
 	    return (i);
 	return (-1);
 }
-/*
-int get_rest(int x, char *to_save, char )
-{
-	char *tmp;
 
-	if (x == -1)
-        return (-1);
-	if (x == 0 && !*to_save[fd])
-	    return (0);
-	if (x == 0)
-        index = get_char_index(to_save[fd], '\n');
-    if ((index != -1) || x == 0)
-    {
-        *line = ft_substr(to_save[fd], 0, index);
-        tmp = to_save[fd];
-        to_save[fd] = ft_strdup(&to_save[fd][index + 1]);
-        free(tmp);
-        return (1);
-    }
-}
-*/
-
-int get_rest(int x, char **to_save, int fd, char **line, int index)
+int get_rest(int x, char **to_save, char **line, int index)
 {
     char *tmp;
 
     if (x < 0)
         return (-1);
-    if (x == 0 && !*to_save[fd])
+    if (x == 0 && !*to_save[0])
         return (0);
     if (x == 0)
-        index = get_char_index(to_save[fd], '\n');
+        index = get_char_index(*to_save, '\n');
     if (index == -1 && x == 0)
     {
-        index = get_char_index(to_save[fd], '\0');
+        index = get_char_index(*to_save, '\0');
         if (index != -1)
         {
-            *line = ft_substr(to_save[fd], 0, index);
-            to_save[fd][0] = '\0';
+            *line = ft_substr(*to_save, 0, index);
+            *to_save[0] = '\0';
             return (1);
         }
-        free(to_save[fd]);
+        free(*to_save);
         return (0);
     }
     if ((index != -1) || x == 0)
     {
-        *line = ft_substr(to_save[fd], 0, index);
-        tmp = to_save[fd];
-        to_save[fd] = ft_strdup(&to_save[fd][index + 1]);
+        *line = ft_substr(*to_save, 0, index);
+        tmp = *to_save;
+        *to_save = ft_strdup(&tmp[index + 1]);
         free(tmp);
         return (1);
     }
@@ -219,7 +174,6 @@ int get_next_line(int fd, char **line)
 	char *tmp;
     int index;
 
-    index = 0;
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (fd < 0 || !line)
 	    return (-1);
@@ -234,12 +188,11 @@ int get_next_line(int fd, char **line)
 			to_save[fd] = ft_strjoin(to_save[fd], buffer);
 			free(tmp);
 		}
-        index = get_char_index(to_save[fd], '\n');
-        if (index != -1)
+        if ((index = get_char_index(to_save[fd], '\n')) != -1)
             break;
 	}
 	free(buffer);
-	return (get_rest(x, to_save, fd, line, index));
+	return (get_rest(x, &to_save[fd], line, index));
 }
 
 int main()
@@ -247,7 +200,7 @@ int main()
     char *str;
     int i;
 
-    int fd = open("/Users/abkssiba/Desktop/projects/gnl/large", O_RDONLY);
+    int fd = open("rr", O_RDONLY);
     while ((i = get_next_line(fd, &str) > 0))
     {
         printf("%s\n", str);
