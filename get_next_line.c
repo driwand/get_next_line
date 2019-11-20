@@ -6,7 +6,7 @@
 /*   By: abkssiba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 16:27:58 by abkssiba          #+#    #+#             */
-/*   Updated: 2019/11/19 21:25:01 by abkssiba         ###   ########.fr       */
+/*   Updated: 2019/11/20 12:25:11 by abkssiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,40 +129,73 @@ int get_char_index(char *str)
 		i++;
 	}
 	if (str[i] == '\0')
-	    return (i);
+		return (i);
 	return (-1);
 }
 
-int get_rest(int x, char *to_save, char **line, int index)
-{
-    char *tmp;
+//int get_rest(int x, char **to_save, char **line, int index)
+//{
+//    char *tmp;
+//
+//    if (x < 0)
+//        return (-1);
+//    if (x == 0 && !*to_save[0])
+//        return (0);
+//    if (x == 0)
+//        index = get_char_index(*to_save, '\n');
+//    if (index == -1 && x == 0)
+//    {
+//        index = get_char_index(*to_save, '\0');
+//        if (index != -1)
+//        {
+//            *line = ft_substr(*to_save, 0, index);
+//            *to_save[0] = '\0';
+//            return (1);
+//        }
+//        free(*to_save);
+//        return (0);
+//    }
+//    if ((index != -1) || x == 0)
+//    {
+//        *line = ft_substr(*to_save, 0, index);
+//        tmp = *to_save;
+//        *to_save = ft_strdup(&tmp[index + 1]);
+//        free(tmp);
+//        return (1);
+//    }
+//    return (0);
+//}
 
-    if (x < 0)
-        return (-1);
-    if (x == 0)
-        index = get_char_index(to_save);
-    if (x == 0 && !to_save[0])
-        return (0);
-    if (index != -1 || x == 0)
-    {
-        if (to_save[index] == '\n')
-        {
-            *line = ft_substr(to_save, 0, index);
-            tmp = to_save;
-            to_save = ft_strdup(&tmp[index + 1]);
-            free(tmp);
-            return (1);
-        }
-        else if (to_save[index] == '\0')
-        {
-            *line = ft_substr(to_save, 0, index);
-            to_save[0] = '\0';
-            return (1);
-        }
-        free(to_save);
-        return(0);
-    }
-    return (0);
+int get_rest(int x, char **to_save, char **line, int index)
+{
+	char *tmp;
+
+	if (x < 0)
+		return (-1);
+	if (x == 0 && !*to_save[0])
+		return (0);
+	if (x == 0)
+		index = get_char_index(*to_save);
+	if (index > 0 || x == 0)
+	{
+		if (*(*to_save + index) == '\n')
+		{
+			*line = ft_substr(*to_save, 0, index);
+			tmp = *to_save;
+			*to_save = ft_strdup(&tmp[index + 1]);
+			free(tmp);
+			return (1);
+		}
+		else if (*(*to_save + index) == '\0')
+		{
+			*line = ft_strdup(*to_save);
+			*to_save[0] = '\0';
+			return (1);
+		}
+		free(*to_save);
+		return(0);
+	}
+	return (0);
 }
 
 int get_next_line(int fd, char **line)
@@ -171,11 +204,11 @@ int get_next_line(int fd, char **line)
 	char *buffer;
 	int x;
 	char *tmp;
-    int index;
+	int index;
 
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (fd < 0 || !line)
-	    return (-1);
+		return (-1);
 	while ((x = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[x] = '\0';
@@ -187,44 +220,44 @@ int get_next_line(int fd, char **line)
 			to_save[fd] = ft_strjoin(to_save[fd], buffer);
 			free(tmp);
 		}
-        if ((index = get_char_index(to_save[fd])))
-            break;
+		if ((index = get_char_index(to_save[fd])) && to_save[fd][index] != '\0')
+			break;
 	}
 	free(buffer);
-	return (get_rest(x, to_save[fd], line, index));
+	return (get_rest(x, &to_save[fd], line, index));
 }
 
 
 int main()
 {
-    char *str;
-    int i;
+	char *str;
+	int i;
 
-    int fd = open("rr", O_RDONLY);
-    while ((i = get_next_line(fd, &str) > 0))
-    {
-        printf("%s\n", str);
-        free(str);
-    }
-//    get_next_line(fd, &str);
-//    printf("%s\n", str);
-//    free(str);
+	int fd = open("/Users/abkssiba/Desktop/projects/gnl/large", O_RDONLY);
+	while ((i = get_next_line(fd, &str) > 0))
+	{
+		printf("%s\n", str);
+		free(str);
+	}
+	//    get_next_line(fd, &str);
+	//    printf("%s\n", str);
+	//    free(str);
 
-// 	get_next_line(fd, &str);
-// 	printf("%s\n", str);
-//    free(str);
-//
-//    get_next_line(fd, &str);
-//    printf("%s\n", str);
-//    free(str);
-//
-//    get_next_line(fd, &str);
-//    printf("%s\n", str);
-//    free(str);
-//
-//    get_next_line(fd, &str);
-//    printf("%s\n", str);
-//    free(str);
-    return 0;
+	// 	get_next_line(fd, &str);
+	// 	printf("%s\n", str);
+	//    free(str);
+	//
+	//    get_next_line(fd, &str);
+	//    printf("%s\n", str);
+	//    free(str);
+	//
+	//    get_next_line(fd, &str);
+	//    printf("%s\n", str);
+	//    free(str);
+	//
+	//    get_next_line(fd, &str);
+	//    printf("%s\n", str);
+	//    free(str);
+	return 0;
 }
 
