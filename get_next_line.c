@@ -133,31 +133,33 @@ int get_char_index(char *str)
 	return (-1);
 }
 
-int get_rest(int x, char **to_save, char **line, int index)
+int get_rest(int x, char *to_save, char **line, int index)
 {
     char *tmp;
 
     if (x < 0)
         return (-1);
-    if (x == 0 && !*to_save[0])
+    if (x == 0)
+        index = get_char_index(to_save);
+    if (x == 0 && !to_save[0])
         return (0);
     if (index != -1 || x == 0)
     {
-        if (*to_save[index] == '\n')
+        if (to_save[index] == '\n')
         {
-            *line = ft_substr(*to_save, 0, index);
-            tmp = *to_save;
-            *to_save = ft_strdup(&tmp[index + 1]);
+            *line = ft_substr(to_save, 0, index);
+            tmp = to_save;
+            to_save = ft_strdup(&tmp[index + 1]);
             free(tmp);
             return (1);
         }
-        else if (*to_save[index] == '\0')
+        else if (to_save[index] == '\0')
         {
-            *line = ft_substr(*to_save, 0, index);
-            *to_save[0] = '\0';
+            *line = ft_substr(to_save, 0, index);
+            to_save[0] = '\0';
             return (1);
         }
-        free(*to_save);
+        free(to_save);
         return(0);
     }
     return (0);
@@ -189,7 +191,7 @@ int get_next_line(int fd, char **line)
             break;
 	}
 	free(buffer);
-	return (get_rest(x, &to_save[fd], line, index));
+	return (get_rest(x, to_save[fd], line, index));
 }
 
 
@@ -198,7 +200,7 @@ int main()
     char *str;
     int i;
 
-    int fd = open("line", O_RDONLY);
+    int fd = open("rr", O_RDONLY);
     while ((i = get_next_line(fd, &str) > 0))
     {
         printf("%s\n", str);
