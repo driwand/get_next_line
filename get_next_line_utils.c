@@ -6,7 +6,7 @@
 /*   By: abkssiba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:17:50 by abkssiba          #+#    #+#             */
-/*   Updated: 2019/11/18 17:05:11 by abkssiba         ###   ########.fr       */
+/*   Updated: 2019/11/20 21:30:18 by abkssiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strchr(const char *s, int c)
 	while (i < len + 1)
 	{
 		if (str[i] == (char)c)
-			return (&str[i+1]);
+			return (&str[i + 1]);
 		i++;
 	}
 	return (NULL);
@@ -47,7 +47,7 @@ char	*ft_strdup(const char *s1)
 {
 	char	*str;
 	size_t	len;
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	len = ft_strlen(s1);
@@ -65,13 +65,13 @@ char	*ft_strdup(const char *s1)
 	return (NULL);
 }
 
-char		*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	size_t	ls1;
 	size_t	ls2;
-	int	j;
-	int i;
+	int		j;
+	int		i;
 
 	i = -1;
 	if (!s1 || !s2)
@@ -81,7 +81,7 @@ char		*ft_strjoin(char *s1, char *s2)
 	str = (char*)malloc(sizeof(char) * (ls1 + ls2 + 1));
 	if (!str)
 		return (NULL);
-	while (++i < (int) ls1)
+	while (++i < (int)ls1)
 		str[i] = s1[i];
 	j = 0;
 	while (i < (int)(ls1 + ls2))
@@ -92,12 +92,12 @@ char		*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-char    *ft_substr(char *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
-	char    *str;
-	char    *p;
-	char    *r;
-	size_t    l;
+	char	*str;
+	char	*p;
+	char	*r;
+	size_t	l;
 
 	if (!s)
 		return (NULL);

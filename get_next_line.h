@@ -6,7 +6,7 @@
 /*   By: abkssiba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 17:42:53 by abkssiba          #+#    #+#             */
-/*   Updated: 2019/11/18 16:46:07 by abkssiba         ###   ########.fr       */
+/*   Updated: 2019/11/20 21:30:55 by abkssiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 
 int		get_next_line(int fd, char **line);
 size_t	ft_strlen(const char *s);
-char		*ft_strchr(const char *s, int c);
+char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(const char *s1);
-char    *ft_substr(char *s, unsigned int start, size_t len);
+char	*ft_substr(char *s, unsigned int start, size_t len);
 #endif
