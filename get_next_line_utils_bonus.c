@@ -6,7 +6,7 @@
 /*   By: abkssiba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:17:50 by abkssiba          #+#    #+#             */
-/*   Updated: 2019/11/21 12:33:33 by abkssiba         ###   ########.fr       */
+/*   Updated: 2019/11/21 14:25:20 by abkssiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,6 @@ size_t	ft_strlen(const char *s)
 		s++;
 	}
 	return (i);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	size_t	i;
-	char	*str;
-	size_t	len;
-
-	len = ft_strlen(s);
-	str = (char*)s;
-	i = 0;
-	while (i < len + 1)
-	{
-		if (str[i] == (char)c)
-			return (&str[i + 1]);
-		i++;
-	}
-	return (NULL);
 }
 
 char	*ft_strdup(const char *s1)
